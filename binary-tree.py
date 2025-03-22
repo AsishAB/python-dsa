@@ -39,10 +39,37 @@ def create_binary_tree(data):
     return node
 
 tree = create_binary_tree(tree_tuple)
-print(tree.left.key, tree.right.key)
+
 
 def tree_to_tuple(tree):
     pass
 
 def display_keys():
     pass
+
+
+# In order traversal
+
+def in_order_traversal_binary_tree(node):
+    if node is None:
+        return []
+    print(node.left , node.key , node.right)
+    return (in_order_traversal_binary_tree(node.left) + [node.key] + in_order_traversal_binary_tree(node.right))
+
+print(in_order_traversal_binary_tree(tree))
+
+
+def tree_height(node):
+    if node is None:
+        return 0
+    return 1 + max(tree_height(node.left), tree_height(node.right)) # 1 is added to count the root node
+
+print(tree_height(tree))
+
+
+def tree_size(node):
+    if node is None:
+        return 0
+    return 1 + tree_size(node.left) + tree_size(node.right)  # 1 is added to count the root node
+
+print(tree_size(tree))
