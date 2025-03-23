@@ -1,6 +1,7 @@
 import time
 
 
+
 # cards = [4,12,34,34,34,34,35,48,65,65,65,65,65,7,7,7,7,7,7,7,7]
 cards = list(range(0,999999))
 cards.sort()

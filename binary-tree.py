@@ -1,3 +1,5 @@
+from binary_searcy_tree import is_bst
+
 class Node:
     def __init__(self, key):
         self.key = key
@@ -73,3 +75,4 @@ def tree_size(node):
     return 1 + tree_size(node.left) + tree_size(node.right)  # 1 is added to count the root node
 
 print(tree_size(tree))
+print(is_bst(tree))
