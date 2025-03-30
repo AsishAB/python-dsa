@@ -4,6 +4,7 @@
 
 # Check if a tree is a Binary Search Tree. Also, return the Minimum Node and the Maximum Node
 
+
 def remove_none(nums):
     return [x for x in nums if x is not None]
 
@@ -24,3 +25,15 @@ def is_bst(node):
     max_key = max(remove_none([max_l, node.key, max_r]))
 
     return is_bst_node, min_key, max_key
+
+def insert_node_in_bst(node, key,value):
+    if node is None:
+        node = BSTNode(key, value)
+    elif key < node.key:
+        node.left = insert_node_in_bst(node.left, key, value)
+        node.left.parent = node
+    elif key > node.key:
+        node.right = insert_node_in_bst(node.right, key, value)
+        node.right.parent = node
+
+    return node
