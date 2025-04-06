@@ -76,3 +76,16 @@ def tree_size(node):
 
 print(tree_size(tree))
 print(is_bst(tree))
+
+# Check if a binary tree is a balanced tree
+# The left subtree should be balanced
+# The right sub tree should be balanced
+# The difference of height of left subtree and right subtree is not more than 1
+def is_balanced(node):
+    if node is None:
+        return None
+    balanced_l, height_l = is_balanced(node.left)
+    balanced_r, height_r = is_balanced(node.right)
+    balanced = balanced_l and balanced_r and abs(height_l - height_r) <= 1 
+    height = 1 + max(height_l, height_r)
+    return balanced, height

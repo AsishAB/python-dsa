@@ -37,3 +37,43 @@ def insert_node_in_bst(node, key,value):
         node.right.parent = node
 
     return node
+
+# Find a node in a BST
+
+def find_node(node, key):
+    if node is None:
+        return None
+    elif key == node.key:
+        return node
+    elif key < node.key:
+        return find_node(node.left, key)
+    elif key > node.key:
+        return find_node(node.right, key)
+    
+# List all nodes in a BST
+def list_all(node):
+    if node is None:
+        return list_all(node.left) + [(node.key, node.value)] + list_all(node.right)
+
+def make_balanced_bst(data, lo = 0, hi = None, parent= None):
+    if hi is None:
+        hi = len(data) - 1
+    if lo > hi:
+        return None
+    
+    mid = (lo + hi) // 2
+    key, value = data[mid]
+    # root = BSTNode(key, value) # Create this Class BSTNode  first
+    root = None # Remove this after creating BSTNode
+    root.parent = parent
+    root.left = make_balanced_bst(data, lo, mid - 1, root)
+    root.left = make_balanced_bst(data, mid + 1, hi, root)
+
+    return root
+
+# Function to balance an Unbalanced BST
+# We already have a list of sorted data, just need to create the BST
+
+def balance_bst(node):
+    return make_balanced_bst(list_all(node))
+    
