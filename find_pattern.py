@@ -29,4 +29,20 @@ def lcs_memo(seq1, seq2):
         return memo[key]
     return recurse(0 , 0) # lcs_memo() does not return anything without this. recurse() is an internal function. So, we call the recurse function and return the output from there as the output of lcs_memo() 
     
-print(lcs_memo("absent", "best")) # Should be 3 => b s t
+# print(lcs_memo("absent", "best")) # Should be 3 => b s t
+
+
+# Find Subsequence using Dynamic Programming
+
+def lcs_dp(seq1, seq2):
+    n1, n2 = len(seq1), len(seq2)
+    table = [[0 for x in range(n2 + 1)] for x in range (n1 + 1) ] # The first row and column of a table is 0
+    for i in range(n1):
+        for j in range(n2):
+            if seq1[i] == seq2[j]:
+                table[i + 1][j + 1] = 1 + table[i][j]
+            else:
+                table[i + 1][j + 1] = max(table[i][j + 1], table[i + 1][j])
+    return table[-1][-1]
+
+print(lcs_dp("absent", "best")) # Should be 3 => b s t
