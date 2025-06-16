@@ -46,3 +46,15 @@ def lcs_dp(seq1, seq2):
     return table[-1][-1]
 
 print(lcs_dp("absent", "best")) # Should be 3 => b s t
+
+# Timestamp :- 8.26.37
+
+def max_profits_recursive(weights, profits, capacity, idx = 0):
+    if idx == len(weights):
+        return 0
+    elif weights[idx] > capacity:
+        return max_profits_recursive(weights, profits, capacity, idx + 1)
+    else:
+        option1 = max_profits_recursive(weights, profits, capacity, idx + 1)
+        option2 = profits[idx] + max_profits_recursive(weights, profits, capacity-weights[idx], idx + 1)
+        return max(option1, option2)
