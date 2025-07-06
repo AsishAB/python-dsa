@@ -73,3 +73,92 @@ def dps(graph, root):
             if not discovered[node]:
                 stack.append(node)
     return result
+
+# Graph with weighted and directed weights
+class Graph2:
+    def __init__(self, num_nodes, edges, directed=False, weighted=False):
+        self.num_nodes = num_nodes
+        self.directed = directed
+        self.weighted = weighted
+        self.data = [[] for _ in range(num_nodes)]
+        self.weight = [[] for _ in range(num_nodes)]
+        for edge in edges:
+            if self.weighted:
+                node1, node2, weight = edge
+                self.data[node1].append(node2)
+                self.weight[node1].append(weight)
+                if not directed:
+                    self.data[node2].append(node1)
+                    self.weight[node2].append(weight)
+                else:
+                    node1, node2 = edge
+                    self.data[node1].append(node2)
+                    if not directed:
+                        self.data[node2].append(node1)
+    
+    def __repr__(self):
+        result = ""
+        if self.weighted:
+            for i, (nodes, weights) in  enumerate(list(zip(self.data, self.weight))):
+                result += f"{i}: {list(zip(nodes, weights))}\n"
+        else:
+            for i, nodes in enumerate(self.data):
+                result += f"{i}: {nodes}\n"
+
+        return result
+
+num_nodes2 = 9
+edges2 = [(0,1,3), (0,3,2),(0,8,4),(1,7,4), (2,7,2), (2,3,6), (2,5,1), (3,4,1), (4,8,8), (5,6,8)]
+
+graph2 = Graph2(num_nodes2, edges2, weighted=True)
+
+print(f"Graph 2 =\n {graph2}")
+
+# Find the shortest path of a graph
+
+def shortest_path(graph, source, target):
+    visited = [False] * len(graph.data)
+    distance = [float('inf')] * len(graph.data)
+    queue = []
+    distance[source] = []
+    queue.append(source)
+    idx = 0
+    while idx < len(queue) and not visited[target]:
+        current = queue[idx]
+        idx += 1
+        update_distances(graph, current, distance)
+        next_node = pick_next_node(distance, visited)
+        if next_node:
+            queue.append(next_node)
+
+        visited[current] = True
+
+    return distance[target]
+
+def update_distances(graph, current, distance, parent=None):
+    # Update the distance of current node's neighbours
+    neighbours = graph.data[current]
+    weights = graph.weight[current]
+    for i, node in enumerate(neighbours):
+        weight = weights[i]
+        if distance[current] + weight < distance[node]:
+            distance[node] = distance[current] + weight
+            if parent:
+                parent[node] = current
+    
+
+def pick_next_node(distance, visited):
+    # Pick the next unvisited node at the smallest distance
+    min_distance = float('inf')
+    min_node = None
+    for node in range(len(distance)):
+        if not visited[node] and distance[node] < min_distance:
+            min_node = node
+            min_distance = distance[node]
+    return min_node
+
+        
+
+
+
+
